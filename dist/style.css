@@ -1,0 +1,162 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@300;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap");
+
+
+
+:root {
+  --font-family-sans-serif: "latto", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+
+ /*    PAGE_VARIABLES      */
+  --font-family-text: var(--font-family-sans-serif);
+  --font-family-sec: "Oswald";
+  --background-color: #29b5ad;
+  --allTasks-color: #b74e2e;
+  --text-color: #f0ebe5;
+}
+
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: var(--font-family-text);
+  font-weight: 300;
+}
+.deleteButton,
+.toggleButton {
+  background: transparent;
+  border: none;
+  outline: none;
+}
+/* LISTS  */
+#all-tasks {
+  border-radius: 5%;
+  background: var(--allTasks-color);
+}
+.list-group-item:hover,
+.list-group-item,
+.list-group-item.active {
+  background: var(--allTasks-color);
+  border: none;
+  font-size: 1.2rem;
+}
+.list-group-item:focus {
+  background: white;
+  color: black;
+}
+.list-group-item.active {
+  background: white;
+  color: black;
+}
+#all-tasks h1 {
+  color: yellow;
+}
+
+#todos-task {
+  color: black;
+}
+/*DELETE BUTTON*/
+#list-tab button {
+  cursor: pointer;
+  width: fit-content;
+  /* color: beige; */
+  color: black;
+  background-color: transparent;
+  border: none;
+  position: relative;
+  bottom: 38px;
+  left: 88%;
+  z-index: 100;
+}
+#list-tab input {
+  float: left;
+  width: 100%;
+}
+
+
+/*    HEADER    */
+
+
+
+
+
+
+
+
+
+
+                                    /*     ANALOG CLOCK       */
+/* Layout */
+.main-clock {
+  display: flex;  
+  top: 0;
+  left: 0; 
+  max-width: 200px;
+  max-height: 200px;
+  /* position: fixed; */
+  /* padding: 2em; */
+  /* height: 20%; */
+  justify-content: center;
+  align-items: center;
+  z-index: -300;
+}
+
+.clockbox,
+#clock {
+  width: 100%;
+}
+
+/* Clock styles */
+.circle {
+  fill: none;
+  stroke: #29b5ad;
+  stroke-width: 9;
+  stroke-miterlimit: 10;
+}
+
+.mid-circle {
+  fill: #419acd;
+}
+.hour-marks {
+  fill: none;
+  stroke: #79d945;
+  stroke-width: 9;
+  stroke-miterlimit: 10;
+}
+
+.hour-arm {
+  fill: none;
+  stroke: #b74e2e;
+  stroke-width: 17;
+  stroke-miterlimit: 10;
+}
+
+.minute-arm {
+  fill: none;
+  stroke: #65a5da;
+  stroke-width: 11;
+  stroke-miterlimit: 10;
+}
+
+.second-arm {
+  fill: none;
+  stroke: yellow;
+  stroke-width: 4;
+  stroke-miterlimit: 10;
+}
+
+/* Transparent box ensuring arms center properly. */
+.sizing-box {
+  fill: none;
+}
+
+/* Make all arms rotate around the same center point. */
+/* Optional: Use transition for animation. */
+#hour,
+#minute,
+#second {
+  transform-origin: 300px 300px;
+  transition: transform 0.5s ease-in-out;
+}
