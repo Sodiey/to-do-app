@@ -10,11 +10,10 @@
     <link rel="stylesheet" href="style.css">
 
     <title>Todo App</title>
-
   </head>
   <body>
     <header id="site-header" class="container-fluid">
-      <div class="row">
+      <div class="row align-items-center">
         <div class="main-clock col-12 col-sm-3 col-md-3 m-auto justify-content-center">
           <div class="clockbox">
             <svg
@@ -48,48 +47,60 @@
           </div>
           <!-- .clockbox -->
         </div>
-        <h1 class="col-12 col-sm-9 display-3">Stuff I need to do</h1>
+        <h1 class="col-12 col-sm-9 display-2 font-weight-bold">Stuff I need to do</h1>
         <!-- <div class="col-4">Date</div> -->
       </div>
     </header>
-    <div class="todo-list container">
+
+
+    <div class="todo-list container mt-5">
 
       <div class="row">
-        <div class="col-12 col-sm-5 col-md-4 shadow-lg p-4" id="all-tasks">
-          <h1>My Lists </h1>
-          <button data-new-list><i class="fas fa-plus"></i></button>
-          <div class="list-group p-3" id="list-tab" role="tablist" data-list-container></div>
+        
+        <div class="col-12 col-sm-5 col-md-4 shadow-lg p-0" id="list-container">
+          <div class="list-header d-flex p-4 justify-content-around align-items-center">
+            <h1>My Lists </h1>
+            <span data-new-list><i class="fas fa-plus fa-2x"></i></span>
+          </div>
+          <div class="list-group" id="list-tab" role="tablist" data-list-container></div>
         </div>
 
+
         <div class="col-12 col-sm-7 col-md-8" id="todo-task" data-list-display-container>
-          <div class="todo-header">
-            <h2 class="list-title fade show" data-list-title></h2>
-            <p class="task-count" data-list-count>3 tasks remaining</p>
+          <div class="todo-header shadow-lg p-3">
+            <h2 class="list-title" data-list-title></h2>
+            <p class="task-count" data-list-count>  </p>
           </div>
           <div class="todo-body">
             <div class="tab-content" id="nav-tabContent" data-tasks></div>
             <div class="new-task-creator">
-              <form action="" class="form-group">
-                <input type="text" class="new-task form-control-sm" placeholder="new task name" aria-label="new task name">
-                <button class="btn-sm btn-outline-danger" aria-label="create new task"><i class="fas fa-plus"></i></button>
+              <form action="" data-new-task-form>
+                <input type="text" data-new-task-input class="new-task" placeholder="new task name" aria-label="new task name">
+                <button class="btn p-0 mr-1 bg-transparent" aria-label="create new task"><i class="fas fa-plus"></i></button>
               </form>
             </div>
           </div>
-
         </div>
 
       </div>
     </div>
+
     
     <template id="list-template">
-        <input onkeypress="submitList(event)" placeholder="Name You List" type="text" class="list-group-item list-group-item-action" data-toggle="list" role="tab" aria-controls="home" />
+        <input onkeypress="submitList(event)" placeholder="Name You List" type="text" class="list-group-item list-group-item-action" data-toggle="list" role="tab" />
         <button data-delete-btn style="display: none">
           <i class="fas fa-times"></i>
         </button>
     </template>
 
-    <template id="task-template">
-      <div class="tab-pane fade " role="tabpanel">
+    <template id="task-template-container">
+      <div class="tab-pane fade" role="tabpanel">
+      </div>
+    </template>
+
+    
+    <template id="task-template-item">
+      <div class="task">
         <input type="checkbox">
         <label>
           <span class="custom-checkbox"></span>

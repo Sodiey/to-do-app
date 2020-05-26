@@ -1,13 +1,15 @@
 const listContainer = document.querySelector("[data-list-container]");
 const addNewList = document.querySelector("[data-new-list]");
 const listTemplate = document.getElementById("list-template");
-const taskTemplate = document.getElementById("task-template");
-
+const taskTemplate = document.getElementById("task-template-container");
+const taskTemplateItem = document.getElementById("task-template-item");
 
 const listDisplayContainer = document.querySelector("[data-list-display-container]");
 const listTitleElement = document.querySelector("[data-list-title]");
 const listCountElement = document.querySelector("[data-list-count]");
 const taskContainer = document.querySelector("[data-tasks]");
+const newTaskForm = document.querySelector("[data-new-task-form]")
+const newTaskInput = document.querySelector("[data-new-task-input]")
 
 const LOCAL_STORAGE_LIST_KEY = "task.lists";
 const LOCAL_STORAGE_SELECTED_LIST_ID_kEY = "task.selectedListId";
@@ -15,88 +17,112 @@ const LOCAL_STORAGE_SELECTED_LIST_ID_kEY = "task.selectedListId";
 let lists = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || [];
 let selectedListId = localStorage.getItem(LOCAL_STORAGE_SELECTED_LIST_ID_kEY);
 
+newTaskForm.addEventListener("submit", e => {
+  e.preventDefault();
+  const taskName = newTaskInput.value
+  if(taskName === null || taskName === "") return;
+  const task = createTask(taskName);
+    newTaskInput.value = "";
+  const selectedList = lists.find(list=> list.id === selectedListId);
+    selectedList.tasks.push(task)
+  saveAndRender();
+})
+
 addNewList.addEventListener("click", () => {
   const list = createList();
   lists.push(list);
   saveAndRender();
 });
 
-$(listContainer).on("shown.bs.tab", (e) => {
+
+listContainer.addEventListener("click", (e) => {
   if (e.target.tagName.toLowerCase() === "input" || "a") {
     selectedListId = e.target.dataset.listId;
+    save();
+    const selectedList = lists.find(list => list.id === selectedListId)
+    const deleteBtn = document.querySelectorAll("[data-delete-btn]");
+    deleteBtn.forEach(btn => {
+      if(`delete-${selectedList.id}` === btn.id) {
+        btn.style.display = "";
+      } else {
+        btn.style.display = "none";
+      }
+    })
   } 
-  saveAndRender();
+  if (e.target.tagName.toLowerCase() === "a") {
+    const selectedList = lists.find(list => list.id === selectedListId)
+      listDisplayContainer.style.display = "";
+      listTitleElement.innerText = selectedList.name.toUpperCase();
+  }
 });
 
-
-
-
+taskContainer.addEventListener("click", (e) => {
+  if(e.target.tagName.toLowerCase() === "input") {
+     const selectedList = lists.find(list => list.id === selectedListId);
+     const selectedTask = selectedList.tasks.find(task => task.id === e.target.id)
+      selectedTask.complete = e.target.checked
+    save();
+    renderTaskCount(selectedList);
+  }
+})
 
 function renderList() {
   lists.forEach((list) => {
     const listElement = document.importNode(listTemplate.content, true);
-
     const listItem = listElement.querySelector(".list-group-item");
     const deleteBtn = listElement.querySelector("button");
-
-    const container = document.getElementById("list-tab");
-
-    listItem.setAttribute("href", `#list-${list.id}`);
-    listItem.id = `list-${list.id}-list`;
-    listItem.dataset.listId = list.id;
-    listItem.value = list.name;
-
-    deleteBtn.id = `delete-${list.id}`;
-
+      listItem.setAttribute("href", `#list-${list.id}`);
+      listItem.id = `list-${list.id}-list`;
+      listItem.dataset.listId = list.id;
+      listItem.value = list.name;
+      deleteBtn.id = `delete-${list.id}`;
     createDeleteBtn(deleteBtn);
-
     if (list.id == selectedListId) {
       listItem.classList.add("active");
       listItem.classList.add("show");
-      deleteBtn.style.display = ""
+      deleteBtn.style.display = "";
     }
-
-    container.appendChild(listElement);
-
+    listContainer.appendChild(listElement);
     if (list.hasItrendered) {
       replaceElement(listItem, "a", list.id);
     }
   });
 }
 
-function renderTask(selectedList) {
-
-  selectedList.tasks.forEach(task => {
-
-  const taskElement = document.importNode(taskTemplate.content, true);
-  const tasks = taskElement.querySelector(".tab-pane")
-
-  lists.forEach(list => {
-    tasks.id =  `list-${list.id}`;
-    setTimeout(()=> {
-      if (selectedListId === list.id) {
-        tasks.classList.add("active")
-        tasks.classList.add("show")
+function renderTask() {
+    lists.forEach(list => {
+      const taskElement = document.createElement("div");
+        taskElement.classList.add("tab-pane")
+        taskElement.classList.add("fade")
+        taskElement.id =  `list-${list.id}`;
+        taskElement.setAttribute("role","tabpanel")  
+      if (list.id == selectedListId) {
+        taskElement.classList.add("active");
+        taskElement.classList.add("show");
       }
-    },200);
+      taskContainer.appendChild(taskElement);
+    });
+
+    lists.forEach(list => {
+      const id = list.id
+      list.tasks.forEach(task=> {
+        const taskElement = document.importNode(taskTemplateItem.content, true);
+        const checkBox = taskElement.querySelector("input");
+        const label = taskElement.querySelector("label")
+        const taskContainer = document.querySelector(`#list-${id}`)
+          checkBox.id = task.id;
+          checkBox.checked = task.complete;
+          label.htmlFor = task.id;    
+          label.append(task.name)
+        taskContainer.appendChild(taskElement);
+      })
   });
-
-    const checkBox = taskElement.querySelector("input");
-    checkBox.id = task.id;
-    checkBox.checked = task.complete;
-
-    const label = taskElement.querySelector("label")
-    label.htmlFor = task.id;    
-    label.append(task.name)
-    taskContainer.appendChild(taskElement);
-  })
 }
-
-
-
-
-
-
+function renderTaskCount(selectedList) {
+  const incompleteTasks = selectedList.tasks.filter(task => !task.complete).length
+  const taskString = incompleteTasks === 1 ? "task" : "tasks"
+    listCountElement.innerText = `${incompleteTasks} ${taskString} remaining`
+}
 
 function replaceElement(source, newType, elementTargetId) {
   // Create the document fragment
@@ -121,9 +147,10 @@ function replaceElement(source, newType, elementTargetId) {
   newElem.textContent = value;
   //Copu each attribute to the new element("a")
   [...source.attributes].forEach((attr) => {
-    newElem.setAttribute(attr.name, attr.value);
+    if(attr.name !== "onkeypress" && attr.name !== "placeholder" && attr.name !== "type") {
+      newElem.setAttribute(attr.name, attr.value);
+    }
   });
-
   // Replace the source element with the new element on the page
   source.parentNode.replaceChild(newElem, source);
 }
@@ -152,27 +179,18 @@ function createList() {
   return {
     name: "",
     id: Date.now().toString(),
-    tasks: [
-      {
-        name: "feed the cat",
-        id: "23",
-        complete: false
-      },
-      {
-        name: "prepare food",
-        id: "45",
-        complete: false
-      },
-      {
-        name: "Do laundry",
-        id: "13",
-        complete: false
-      }
-      
-    ],
+    tasks: [],
     hasItrendered: false,
   };
 }
+function createTask(name) {
+  return {
+    id: Date.now().toString(),
+    name: name,
+    complete: false
+  }
+}
+
 function createDeleteBtn(element) {
   element.addEventListener("click", (e) => {
     if (e.target.tagName.toLowerCase() === "i") {
@@ -197,14 +215,14 @@ function render() {
   renderList();
 
   const selectedList = lists.find(list => list.id === selectedListId)
-  if(selectedListId == null) {
+  if(selectedList == null ) {
     listDisplayContainer.style.display = "none";
   } else {
     listDisplayContainer.style.display = "";
-    listTitleElement.innerText = selectedList.name;
-    // renderTasnkCount(selectedList);
+    listTitleElement.innerText = selectedList.name.toUpperCase();
+    renderTaskCount(selectedList)
     clearElement(taskContainer);
-    renderTask(selectedList)
+    renderTask();
   }
 }
 
@@ -214,6 +232,30 @@ function save() {
 }
 
 render();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

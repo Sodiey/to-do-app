@@ -13,8 +13,10 @@
   --font-family-text: var(--font-family-sans-serif);
   --font-family-sec: "Oswald";
   --background-color: #29b5ad;
-  --allTasks-color: #b74e2e;
+  --listContainer-color: #b74e2e;
+  --listContainer-title-color: yellow;
   --text-color: #f0ebe5;
+  --opacity: .1
 }
 
 
@@ -23,60 +25,150 @@ body {
   color: var(--text-color);
   font-family: var(--font-family-text);
   font-weight: 300;
+  font-size: 1.5rem;
 }
-.deleteButton,
-.toggleButton {
-  background: transparent;
-  border: none;
-  outline: none;
+button,
+span {
+  font-size: 1rem;
 }
+
+/*SITE HEADER*/
+#site-header h1 {
+  letter-spacing: 3px;
+  color: rgba(255, 255, 255, .6)
+}
+
+
+
 /* LISTS  */
-#all-tasks {
-  border-radius: 5%;
-  background: var(--allTasks-color);
-}
-.list-group-item:hover,
 .list-group-item,
+.list-group-item:hover,
 .list-group-item.active {
-  background: var(--allTasks-color);
-  border: none;
-  font-size: 1.2rem;
+  background: var(--listContainer-color);
+  /* border: none; */
 }
 .list-group-item:focus {
-  background: white;
+  background: rgba(255, 255, 255, .8);
   color: black;
 }
 .list-group-item.active {
-  background: white;
+  background: rgba(255, 255, 255, .8);
   color: black;
 }
-#all-tasks h1 {
-  color: yellow;
+
+
+#list-container {
+  border-radius: 5%;
+  background: var(--listContainer-color);
+}
+#list-container h1 {
+  color: var(--listContainer-title-color);
+}
+#list-container span {
+  cursor: pointer;
+}
+#list-container span:hover {
+  color: white;
+  font-size: 1.1rem;
 }
 
 #todos-task {
   color: black;
 }
-/*DELETE BUTTON*/
+/*DELETE List BUTTON*/
 #list-tab button {
   cursor: pointer;
   width: fit-content;
-  /* color: beige; */
   color: black;
-  background-color: transparent;
+  /* background-color: transparent; */
   border: none;
   position: relative;
   bottom: 38px;
   left: 88%;
   z-index: 100;
+  opacity: .3;
 }
+#list-tab button:hover {
+  opacity: 1;
+}
+
 #list-tab input {
   float: left;
   width: 100%;
 }
+#list-tab a {
+  font-weight: 600;
+  color: white;
+}
+#list-tab a.active {
+  text-transform: uppercase;
+}
+::placeholder { 
+  font-weight: 500;
+  color: var(--text-color);
+  font-size: 1.2rem;
+}
+input.active::placeholder,
+#list-tab a.active  { 
+  color: #444;
+  letter-spacing: 2px;
+  padding-left: 6px;
+}
+
+/*    TASK    */
 
 
-/*    HEADER    */
+ /*new task input*/
+ form {
+   display: flex;
+ }
+
+.new-task {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid currentColor;
+  color: inherit;
+  font-size: inherit;
+  outline: none;
+  order: 2;
+  transition: border-bottom 250ms ease-in;
+}
+.new-task:focus {
+  border-bottom-width: 3px;
+}
+.new-task::placeholder {
+  opacity: .6;
+}
+
+.btn {
+  color: inherit;
+  font-size: 1.2rem;
+
+  transition: opacity 250ms ease-in;
+}
+ .btn:hover {
+   opacity: .7;
+ }
+.todo-header {
+  background: rgba(255, 255, 255, var(--opacity));
+  width: 100%;
+  border-radius: 5%;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
