@@ -1,0 +1,19 @@
+{
+  "name": "toso_withvanillajs",
+  "version": "1.0.0",
+  "description": "stuff to do",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sodiey/to-do-app.git"
+  },
+  "author": "Sotiris Karapostolou",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sodiey/to-do-app/issues"
+  },
+  "homepage": "https://github.com/Sodiey/to-do-app#readme"
+}
