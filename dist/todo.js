@@ -1,8 +1,7 @@
 const listContainer = document.querySelector("[data-list-container]");
 const addNewList = document.querySelector("[data-new-list]");
 const listTemplate = document.getElementById("list-template");
-const taskTemplate = document.getElementById("task-template-container");
-const taskTemplateItem = document.getElementById("task-template-item");
+const taskTemplate = document.getElementById("task-template");
 
 const listDisplayContainer = document.querySelector("[data-list-display-container]");
 const listTitleElement = document.querySelector("[data-list-title]");
@@ -40,7 +39,7 @@ listContainer.addEventListener("click", (e) => {
     selectedListId = e.target.dataset.listId;
     save();
     const selectedList = lists.find(list => list.id === selectedListId)
-    const deleteBtn = document.querySelectorAll("[data-delete-btn]");
+    const deleteBtn = document.querySelectorAll("[data-delete-list]");
     deleteBtn.forEach(btn => {
       if(`delete-${selectedList.id}` === btn.id) {
         btn.style.display = "";
@@ -76,7 +75,7 @@ function renderList() {
       listItem.dataset.listId = list.id;
       listItem.value = list.name;
       deleteBtn.id = `delete-${list.id}`;
-    createDeleteBtn(deleteBtn);
+    createDeleteListBtn(deleteBtn);
     if (list.id == selectedListId) {
       listItem.classList.add("active");
       listItem.classList.add("show");
@@ -106,18 +105,29 @@ function renderTask() {
     lists.forEach(list => {
       const id = list.id
       list.tasks.forEach(task=> {
-        const taskElement = document.importNode(taskTemplateItem.content, true);
+        const taskElement = document.importNode(taskTemplate.content, true);
         const checkBox = taskElement.querySelector("input");
         const label = taskElement.querySelector("label")
         const taskContainer = document.querySelector(`#list-${id}`)
+        const clearCompleteTasksButton = taskElement.querySelector("[data-delete-task]")
+          createDeleteTaskBtn(clearCompleteTasksButton);
           checkBox.id = task.id;
           checkBox.checked = task.complete;
           label.htmlFor = task.id;    
-          label.append(task.name)
+          label.append(toTitleCase(task.name))
         taskContainer.appendChild(taskElement);
       })
   });
 }
+
+const toTitleCase = (phrase) => {
+  return phrase
+    .toLowerCase()
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
+
 function renderTaskCount(selectedList) {
   const incompleteTasks = selectedList.tasks.filter(task => !task.complete).length
   const taskString = incompleteTasks === 1 ? "task" : "tasks"
@@ -191,7 +201,15 @@ function createTask(name) {
   }
 }
 
-function createDeleteBtn(element) {
+function createDeleteTaskBtn(element) {
+  element.addEventListener("click", e => {
+    const selectedList = lists.find(list => list.id === selectedListId);
+    selectedList.tasks = selectedList.tasks.filter(task => !task.complete);
+    saveAndRender();
+  })
+}
+
+function createDeleteListBtn(element) {
   element.addEventListener("click", (e) => {
     if (e.target.tagName.toLowerCase() === "i") {
       lists = lists.filter(
@@ -232,12 +250,6 @@ function save() {
 }
 
 render();
-
-
-
-
-
-
 
 
 
