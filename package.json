@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "stuff to do",
   "main": "index.js",
+  "homepage":"https://sodiey.github.io/to-do-app",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,7 @@
   "bugs": {
     "url": "https://github.com/Sodiey/to-do-app/issues"
   },
-  "homepage": "https://github.com/Sodiey/to-do-app#readme"
+  "dependencies": {
+    "gh-pages": "^2.2.0"
+  }
 }
