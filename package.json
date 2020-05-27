@@ -1,9 +1,9 @@
 {
-  "name": "toso_withvanillajs",
+  "name": "todo-app",
   "version": "1.0.0",
-  "description": "stuff to do",
+  "description": "todo app with vanilla javascript",
   "main": "index.js",
-  "homepage":"https://sodiey.github.io/to-do-app",
+  "homepage": "https://github.com/Sodiey/to-do-app",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "gh-pages -d dist"
@@ -18,6 +18,6 @@
     "url": "https://github.com/Sodiey/to-do-app/issues"
   },
   "dependencies": {
-    "gh-pages": "^2.2.0"
+    "gh-pages": "^1.2.0"
   }
 }
