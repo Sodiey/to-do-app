@@ -1,0 +1,351 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@300;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap");
+
+
+
+:root {
+  --font-family-sans-serif: "latto", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+
+ /*    PAGE_VARIABLES      */
+  --font-family-text: var(--font-family-sans-serif);
+  --font-family-sec: "Oswald";
+  --background-color: #29b5ad;
+  --listContainer-color: #b74e2e;
+  --listContainer-title-color: yellow;
+  --text-color-light: #f0ebe5;
+  --text-color-dark: #1A1A1A;
+  --checkbox-color: rgb(54, 112, 199);
+  --opacity: .1;
+}
+
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color-light);
+  font-family: var(--font-family-text);
+  font-weight: 300;
+  font-size: 1.5rem;
+}
+button,
+span {
+  font-size: 1rem;
+}
+h2 {
+  font-weight: 500;
+  font-size: 2.4rem;
+}
+
+.border-radius {
+  border-radius: 20px;
+}
+
+/*SITE HEADER*/
+#site-header h1 {
+  letter-spacing: 3px;
+  color: rgba(255, 255, 255, .6);
+}
+
+
+
+/* LISTS  */
+
+    /**/
+.list-group-item,
+.list-group-item:hover,
+.list-group-item.active {
+  background: var(--listContainer-color);
+  /* border: none; */
+}
+.list-group-item:focus {
+  background: rgba(255, 255, 255, .8);
+  color: black;
+}
+.list-group-item:hover {
+  opacity: .9;
+}
+.list-group-item.active {
+  background: rgba(255, 255, 255, .8);
+  color: var(--text-color-dark);
+}
+
+
+#list-container {
+  background: var(--listContainer-color);
+  height: fit-content;
+}
+#list-container h1 {
+  color: var(--listContainer-title-color);
+}
+#list-container span {
+  cursor: pointer;
+}
+#list-container span:hover {
+  color: white;
+  font-size: 1.1rem;
+}
+
+/*DELETE LIST BUTTON*/
+.delete-btn {
+  cursor: pointer;
+  position: relative;
+}
+#list-tab .delete-btn  {
+  width: fit-content;
+  color: black;
+  border: none;
+  bottom: 38px;
+  left: 88%;
+  z-index: 100;
+  opacity: .3;
+}
+#list-tab button:hover {
+  opacity: 1;
+}
+
+#list-tab input {
+  float: left;
+  width: 100%;
+}
+#list-tab a {
+  font-weight: 600;
+  color: white;
+}
+#list-tab a.active {
+  text-transform: uppercase;
+}
+::placeholder { 
+  font-weight: 500;
+  color: var(--text-color-light);
+  font-size: 1.2rem;
+}
+input.active::placeholder,
+#list-tab a.active  { 
+  color: black!important;
+  letter-spacing: 2px;
+  padding-left: 6px;
+}
+
+/*    TASK    */
+
+
+ /*new task input*/
+
+ form {
+   display: flex;
+ }
+
+.new-task {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid currentColor;
+  color: inherit;
+  font-size: inherit;
+  outline: none;
+  order: 2;
+  transition: border-bottom 250ms ease-in;
+}
+.new-task:focus {
+  border-bottom-width: 3px;
+}
+.new-task::placeholder {
+  opacity: .6;
+}
+
+.btn {
+  color: inherit;
+  font-size: 1.2rem;
+
+  transition: opacity 250ms ease-in;
+}
+ .btn:hover {
+   opacity: .7;
+ }
+
+ #todo-task {
+   background: rgba(255, 255, 255, var(--opacity));
+   font-family: var(--font-family-sec);
+   font-weight: 300;
+ }
+
+.todo-header {
+  background: rgba(255, 255, 255, var(--opacity));
+  width: 100%;
+}
+
+.list-title {
+  color: var(--text-color-dark);
+}
+.task-count {
+  color: rgb(104, 104, 104);
+  font-size: 1.1rem;
+}
+
+.task {
+  background: rgba(255, 255, 255, .3);
+  line-height: 1.5;
+  /* font-family: "Work Sans"; */
+  width: 90%;
+  font-weight: 500;
+  color: #444;
+  position: relative;
+  margin-bottom: 1em;
+}
+
+[type="checkbox"] {
+  opacity: 0;
+  position: absolute;
+}
+
+.task label {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  padding: .2em;
+}
+
+.task::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: -.3em;
+  height: 1px;
+  background: currentColor;
+  opacity: .1;
+}
+
+.custom-checkbox {
+  --size: 1.3em;
+  display: inline-block;
+  width: var(--size);
+  height: var(--size);
+  margin-right: var(--size);
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  cursor: pointer;
+
+  transform: scale(1);
+  transition: transform 300ms ease-in;
+}
+
+.task:hover .custom-checkbox,
+[type="checkbox"]:focus + label .custom-checkbox {
+  transform: scale(1.2);
+  color: var(--checkbox-color);
+}
+
+[type="checkbox"]:checked + label .custom-checkbox {
+  background: var(--checkbox-color);
+  border-color: var(--checkbox-color);
+  box-shadow: inset 0 0 0px 3px whitesmoke;
+}
+
+[type="checkbox"]:checked + label {
+  opacity: .5;
+}
+
+.task label::after {
+  content: "";
+  position: absolute;
+  left: 3.1em;
+  right: 0;
+  top: 50%;
+  height: 3px;
+  background: currentColor;
+
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 150ms ease-in-out;
+}
+
+[type="checkbox"]:checked + label::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.task .delete-btn {
+  left: -8px;
+  transform: scale(1);
+
+  transition: transform 150ms ease-in;
+}
+.task .delete-btn:hover {
+  color: whitesmoke;
+  border-color: whitesmoke;
+  transform: scale(1.1);
+}
+
+
+                                    /*     ANALOG CLOCK       */
+/* Layout */
+.main-clock {
+  display: flex;  
+  top: 0;
+  left: 0; 
+  max-width: 200px;
+  max-height: 200px;
+  justify-content: center;
+  align-items: center;
+  z-index: -300;
+}
+
+.clockbox,
+#clock {
+  width: 100%;
+}
+
+/* Clock styles */
+.circle {
+  fill: none;
+  stroke: #29b5ad;
+  stroke-width: 9;
+  stroke-miterlimit: 10;
+}
+
+.mid-circle {
+  fill: #419acd;
+}
+.hour-marks {
+  fill: none;
+  stroke: #79d945;
+  stroke-width: 9;
+  stroke-miterlimit: 10;
+}
+
+.hour-arm {
+  fill: none;
+  stroke: #b74e2e;
+  stroke-width: 17;
+  stroke-miterlimit: 10;
+}
+
+.minute-arm {
+  fill: none;
+  stroke: #65a5da;
+  stroke-width: 11;
+  stroke-miterlimit: 10;
+}
+
+.second-arm {
+  fill: none;
+  stroke: yellow;
+  stroke-width: 4;
+  stroke-miterlimit: 10;
+}
+
+/* Transparent box ensuring arms center properly. */
+.sizing-box {
+  fill: none;
+}
+
+/* Make all arms rotate around the same center point. */
+/* Optional: Use transition for animation. */
+#hour,
+#minute,
+#second {
+  transform-origin: 300px 300px;
+  transition: transform 0.5s ease-in-out;
+}
