@@ -7,8 +7,8 @@ const listDisplayContainer = document.querySelector("[data-list-display-containe
 const listTitleElement = document.querySelector("[data-list-title]");
 const listCountElement = document.querySelector("[data-list-count]");
 const taskContainer = document.querySelector("[data-tasks]");
-const newTaskForm = document.querySelector("[data-new-task-form]")
-const newTaskInput = document.querySelector("[data-new-task-input]")
+const newTaskForm = document.querySelector("[data-new-task-form]");
+const newTaskInput = document.querySelector("[data-new-task-input]");
 
 const LOCAL_STORAGE_LIST_KEY = "task.lists";
 const LOCAL_STORAGE_SELECTED_LIST_ID_kEY = "task.selectedListId";
@@ -38,7 +38,7 @@ listContainer.addEventListener("click", (e) => {
   if (e.target.tagName.toLowerCase() === "input" || "a") {
     selectedListId = e.target.dataset.listId;
     save();
-    const selectedList = lists.find(list => list.id === selectedListId)
+    const selectedList = lists.find(list => list.id === selectedListId);
     const deleteBtn = document.querySelectorAll("[data-delete-list]");
     deleteBtn.forEach(btn => {
       if(`delete-${selectedList.id}` === btn.id) {
@@ -58,8 +58,8 @@ listContainer.addEventListener("click", (e) => {
 taskContainer.addEventListener("click", (e) => {
   if(e.target.tagName.toLowerCase() === "input") {
      const selectedList = lists.find(list => list.id === selectedListId);
-     const selectedTask = selectedList.tasks.find(task => task.id === e.target.id)
-      selectedTask.complete = e.target.checked
+     const selectedTask = selectedList.tasks.find(task => task.id === e.target.id);
+      selectedTask.complete = e.target.checked;
     save();
     renderTaskCount(selectedList);
   }
@@ -91,10 +91,10 @@ function renderList() {
 function renderTask() {
     lists.forEach(list => {
       const taskElement = document.createElement("div");
-        taskElement.classList.add("tab-pane")
-        taskElement.classList.add("fade")
+        taskElement.classList.add("tab-pane");
+        taskElement.classList.add("fade");
         taskElement.id =  `list-${list.id}`;
-        taskElement.setAttribute("role","tabpanel")  
+        taskElement.setAttribute("role","tabpanel");
       if (list.id == selectedListId) {
         taskElement.classList.add("active");
         taskElement.classList.add("show");
@@ -108,13 +108,13 @@ function renderTask() {
         const taskElement = document.importNode(taskTemplate.content, true);
         const checkBox = taskElement.querySelector("input");
         const label = taskElement.querySelector("label")
-        const taskContainer = document.querySelector(`#list-${id}`)
-        const clearCompleteTasksButton = taskElement.querySelector("[data-delete-task]")
+        const taskContainer = document.querySelector(`#list-${id}`);
+        const clearCompleteTasksButton = taskElement.querySelector("[data-delete-task]");
           createDeleteTaskBtn(clearCompleteTasksButton);
           checkBox.id = task.id;
           checkBox.checked = task.complete;
           label.htmlFor = task.id;    
-          label.append(toTitleCase(task.name))
+          label.append(toTitleCase(task.name));
         taskContainer.appendChild(taskElement);
       })
   });
@@ -129,9 +129,9 @@ const toTitleCase = (phrase) => {
 };
 
 function renderTaskCount(selectedList) {
-  const incompleteTasks = selectedList.tasks.filter(task => !task.complete).length
-  const taskString = incompleteTasks === 1 ? "task" : "tasks"
-    listCountElement.innerText = `${incompleteTasks} ${taskString} remaining`
+  const incompleteTasks = selectedList.tasks.filter(task => !task.complete).length;
+  const taskString = incompleteTasks === 1 ? "task" : "tasks";
+    listCountElement.innerText = `${incompleteTasks} ${taskString} remaining`;
 }
 
 function replaceElement(source, newType, elementTargetId) {
@@ -212,13 +212,11 @@ function createDeleteTaskBtn(element) {
 function createDeleteListBtn(element) {
   element.addEventListener("click", (e) => {
     if (e.target.tagName.toLowerCase() === "i") {
-      lists = lists.filter(
-        (list) => e.target.parentNode.id !== `delete-${list.id}`
-      );
+      lists = lists.filter((list) => e.target.parentNode.id !== `delete-${list.id}`);
     } else {
       lists = lists.filter((list) => e.target.id !== `delete-${list.id}`);
     }
-    selectedListId = null
+    selectedListId = null;
     saveAndRender();
   });
 }
