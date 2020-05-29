@@ -39,6 +39,7 @@ listContainer.addEventListener("click", (e) => {
     selectedListId = e.target.dataset.listId;
     save();
     const selectedList = lists.find(list => list.id === selectedListId);
+    renderTaskCount(selectedList);
     const deleteBtn = document.querySelectorAll("[data-delete-list]");
     deleteBtn.forEach(btn => {
       if(`delete-${selectedList.id}` === btn.id) {
@@ -154,7 +155,7 @@ function replaceElement(source, newType, elementTargetId) {
       list.name = value;
     }
   });
-  newElem.textContent = value;
+  newElem.textContent = toTitleCase(value);
   //Copu each attribute to the new element("a")
   [...source.attributes].forEach((attr) => {
     if(attr.name !== "onkeypress" && attr.name !== "placeholder" && attr.name !== "type") {
