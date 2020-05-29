@@ -4,7 +4,7 @@ const API_KEY = "r06RnrZmp64gpFnm55oCh2QtalGRJttz";
 function getWeather(locationKey, location) {
   axios
   .get(
-    `http://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${API_KEY}`)
+    `https://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${API_KEY}`)
   .then((res) => displayWeather(res, location))
   .catch((err) => console.log(err));
 }
@@ -23,7 +23,7 @@ const convertLocation = (res) => {
 
 const getLocationKey = (location) => {
   axios
-  .get(`http://dataservice.accuweather.com/locations/v1/cities/search?apikey=${API_KEY}&q=${location}`)
+  .get(`https://dataservice.accuweather.com/locations/v1/cities/search?apikey=${API_KEY}&q=${location}`)
   .then((res) => getWeather(res.data[0].Key, location))
   .catch((err) => console.log(err));
 }
