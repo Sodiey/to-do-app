@@ -1,5 +1,6 @@
 // GET REQUEST
-const API_KEY = "r06RnrZmp64gpFnm55oCh2QtalGRJttz";
+const API_KEY = "DEMO_KEY";
+const API_URL = "https://developer.accuweather.com/";
 
 function getWeather(locationKey, location) {
   axios
